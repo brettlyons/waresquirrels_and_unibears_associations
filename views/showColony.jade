@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= colony.name
+    p Welcome to Stats for #{colony.name} Colony
+    table(style="border-style: solid; border-width:2px;")
+      tbody
+      for weresq in weresquirrels
+        td #{weresq[0].name}
+      for statSet in weresquirrelStats
+        p
+          for stat in statSet
+            tr  #{stat.garlic} #{stat.meat}
+      

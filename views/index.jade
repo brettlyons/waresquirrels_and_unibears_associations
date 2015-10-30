@@ -3,3 +3,14 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  table(style="border-style: solid; border-width:2px;")
+    tbody
+      tr
+      td(style="border-style:double") Colony:
+      for colony in colonies
+        td(style="border-style:groove")
+          a(href='/colony/' + colony._id) #{colony.name}
+      tr
+      td(style="border-style:double") Wins:
+      for win in wins
+        td(style="border-style:groove") #{win}
