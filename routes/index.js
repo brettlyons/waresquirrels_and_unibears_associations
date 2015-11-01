@@ -6,8 +6,8 @@ var dbHelper = require ('../lib/dbHelper.js')
 router.get('/', function(req, res, next) {
 //put those quantities to the DOM
   dbHelper.getColonies().then(function (colonies) {
-    Promise.all(colonies.map(function (element) {
-      return dbHelper.getWinsByColony(element._id)
+    Promise.all(colonies.map(function (colony) {
+      return dbHelper.getWinsByColony(colony._id)
     })).then(function(results) {
       res.render('index', {
         title: "Total Weresquirrel Extravaganza",
@@ -17,19 +17,17 @@ router.get('/', function(req, res, next) {
     });
   });
 });
-
+/* colony stats page */
 router.get('/colony/:id', function (req, res, next) {
   dbHelper.getColonies(req.params.id).then(function (colonyRecord) {
     dbHelper.getSquirrelsPerColony(colonyRecord[0]._id).then(function(wereSquirrels) {
       return Promise.all(wereSquirrels.map(function (wereSquirrel) {
         return dbHelper.getWeresquirrelStats(wereSquirrel[0]._id);
       })).then(function (wereSquirrelStats){
-        var names = wereSquirrels.map(function ( element, idx ) {
-          return element[0].name;
-        });
-        console.log(wereSquirrelStats);
         res.render('showColony', {
-          colony: names[0],
+         colony: wereSquirrels.map(function (wereSquirrel) {
+            return wereSquirrel[0].name;
+          }),
           weresquirrels: wereSquirrels,
           weresquirrelStats: wereSquirrelStats
         });

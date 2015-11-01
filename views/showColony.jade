@@ -1,14 +1,22 @@
 extends layout
 
+
 block content
   h1= colony.name
     p Welcome to Stats for #{colony.name} Colony
     table(style="border-style: solid; border-width:2px;")
-      tbody
-      for weresq in weresquirrels
-        td #{weresq[0].name}
-      for statSet in weresquirrelStats
-        p
-          for stat in statSet
-            tr  #{stat.garlic} #{stat.meat}
+      for statSet, i in weresquirrelStats
+        thead
+          th(style="border-style: dotted; border-width: 2px;") #{weresquirrels[i][0].name}
+          th(style="border-style: dotted; border-width: 2px;") Garlic collected
+          th(style="border-style: dotted; border-width: 2px;") Meat collected
+          tr
+        tbody
+          for stat, j in statSet
+            tr
+              td(style="border-style: solid; border-width:1px;") Round #{j+1} :
+              td(style="border-style: solid; border-width:1px;") #{stat.garlic} 
+              td(style="border-style: solid; border-width:1px;") #{stat.meat}
       
+    p
+    a(href="/") Return to list of colonies
