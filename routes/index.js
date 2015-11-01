@@ -24,10 +24,9 @@ router.get('/colony/:id', function (req, res, next) {
       return Promise.all(wereSquirrels.map(function (wereSquirrel) {
         return dbHelper.getWeresquirrelStats(wereSquirrel[0]._id);
       })).then(function (wereSquirrelStats){
+        console.log(colonyRecord[0].name);
         res.render('showColony', {
-         colony: wereSquirrels.map(function (wereSquirrel) {
-            return wereSquirrel[0].name;
-          }),
+          colonyName: colonyRecord[0].name, 
           weresquirrels: wereSquirrels,
           weresquirrelStats: wereSquirrelStats
         });
